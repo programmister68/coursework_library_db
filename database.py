@@ -1,177 +1,141 @@
-import pymysql
+import sqlite3
 
 
-class Database:
-    def __init__(self):
-        self.connection = pymysql.connect(
-            host='localhost',
-            port=3307,
-            user='root',
-            password='123abc',
-            database='bank',
-        )
+class DataBase:
+    def __init__(self, name='data.db'):
+        self.db = sqlite3.connect(f"{name}")
+        cur = self.db.cursor()
+        cur.execute("""PRAGMA foreign_keys = ON;""")
 
-    def selectCurrencies(self):
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Currencies")
-        currencies = cursor.fetchall()
-        cursor.close()
-        return currencies
+        cur.execute("""CREATE TABLE IF NOT EXISTS Readers (
+            Reader_ID integer primary key,
+            Reader_Name TEXT,
+            Reader_Gender TEXT,
+            Reader_Date TEXT,
+            Reader_Address TEXT,
+            Reader_Phone TEXT
+            )
+        """)
 
-    def selectPositions(self):
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Positions")
-        positions = cursor.fetchall()
-        cursor.close()
-        return positions
+        cur.execute("""CREATE TABLE IF NOT EXISTS Publishers (
+            Publisher_ID integer primary key,
+            Publisher_Name TEXT,
+            Publisher_Address TEXT,
+            Publisher_Phone TEXT,
+            Publisher_Site TEXT
+            )
+       """)
 
-    def selectEmployees(self):
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Employees")
-        employees = cursor.fetchall()
-        cursor.close()
-        return employees
+        cur.execute("""CREATE TABLE IF NOT EXISTS Books (
+                    Book_ID integer primary key,
+                    Book_Name TEXT,
+                    Book_Author TEXT,
+                    Book_Date TEXT,
+                    Publisher_ID INT,
+                    FOREIGN KEY (Publisher_ID) REFERENCES Publishers(Publisher_ID) ON DELETE SET NULL ON UPDATE CASCADE
+                    )
+                """)
 
-    def selectDepositors(self):
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Depositors")
-        depositors = cursor.fetchall()
-        cursor.close()
-        return depositors
+        cur.execute("""CREATE TABLE IF NOT EXISTS Employees (
+                    Employee_ID integer primary key,
+                    Employee_Name TEXT,
+                    Employee_Gender TEXT,
+                    Employee_Date TEXT,
+                    Employee_Address TEXT,
+                    Employee_Passport TEXT,
+                    Login TEXT,
+                    Password TEXT,
+                    Access_Level INT,
+                    Position_ID INT,
+                    FOREIGN KEY (Position_ID) REFERENCES Positions(Position_ID) ON DELETE SET NULL ON UPDATE CASCADE
+                    )
+                """)
 
-    def selectDeposits(self):
-        cursor = self.connection.cursor()
-        cursor.execute("SELECT * FROM Deposits")
-        deposits = cursor.fetchall()
-        cursor.close()
-        return deposits
+        cur.execute("""CREATE TABLE IF NOT EXISTS Positions (
+                            Position_ID integer primary key,
+                            Position_Name TEXT,
+                            Employee_Salary INT
+                            )
+                        """)
 
-    def insertCurrencies(self, curr_name, exchange_rate):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"INSERT INTO Currencies"
-            f"(`Curr_Name`, `Exchange_Rate`)"
-            f"VALUES ('{curr_name}', {exchange_rate})"
-        )
-        self.connection.commit()
-        cursor.close()
+        cur.execute("""CREATE TABLE IF NOT EXISTS Issues (
+                                    Issue_Date TEXT,
+                                    Return_Date TEXT,
+                                    Return_Status TEXT,
+                                    Reader_ID INT,
+                                    Book_ID INT,
+                                    FOREIGN KEY (Reader_ID) REFERENCES Readers(Reader_ID) ON DELETE SET NULL ON UPDATE CASCADE,
+                                    FOREIGN KEY (Book_ID) REFERENCES Books(Book_ID) ON DELETE SET NULL ON UPDATE CASCADE
+                                    )
+                                """)
+        self.db.commit()
+        cur.close()
 
-    def insertPositions(self, pos_name, salary, responsibility, requirement):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"INSERT INTO Positions"
-            f"(`Pos_Name`, `Salary`, `Responsibility`, `Requirement`)"
-            f"VALUES ('{pos_name}', {salary}, '{responsibility}', '{requirement}')"
-        )
-        self.connection.commit()
-        cursor.close()
-
-    def insertEmployees(self, emp_name, login, password, role, emp_phone, emp_passport, pos_id):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"INSERT INTO Employees"
-            f"(`Emp_Name`, `Login`, `Password`, `Role`, `Emp_Phone`, `Emp_Passport`, `Position_ID`)"
-            f"VALUES ('{emp_name}', '{login}', '{password}', '{role}', '{emp_phone}', '{emp_passport}', {pos_id})"
-        )
-        self.connection.commit()
-        cursor.close()
-
-    def insertDepositors(self, depositor_name, depositor_phone, depositor_passport, dep_sum, ref_sum, dep_date, ref_date, ref_status, emp_id):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"INSERT INTO Depositors"
-            f"(`Depositor_Name`, `Depositor_Phone`, `Depositor_Passport`, `Dep_Sum`, `Refund_Sum`, `Dep_Date`, `Refund_Date`, `Refund_Status`, `Employee_ID`)"
-            f"VALUES ('{depositor_name}', '{depositor_phone}', '{depositor_passport}', {dep_sum}, {ref_sum}, '{dep_date}', '{ref_date}', '{ref_status}', {emp_id})"
-        )
-        self.connection.commit()
-        cursor.close()
-
-    def insertDeposits(self, dep_name, percent_rate, curr_id, depositor_id):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"INSERT INTO Deposits"
-            f"(`Dep_Name`, `Percent_Rate`, `Currency_ID`, `Depositor_ID`)"
-            f"VALUES ('{dep_name}', {percent_rate}, {curr_id}, {depositor_id})"
-        )
-        self.connection.commit()
-        cursor.close()
-
-    def deleteCurrencies(self, id):
-        cursor = self.connection.cursor()
-        cursor.execute(f"DELETE FROM Currencies WHERE `Currency_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def deletePositions(self, id):
-        cursor = self.connection.cursor()
-        cursor.execute(f"DELETE FROM Positions WHERE `Position_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def deleteEmployees(self, id):
-        cursor = self.connection.cursor()
-        cursor.execute(f"DELETE FROM Employees WHERE `Employee_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def deleteDepositors(self, id):
-        cursor = self.connection.cursor()
-        cursor.execute(f"DELETE FROM Depositors WHERE `Depositor_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def deleteDeposits(self, id):
-        cursor = self.connection.cursor()
-        cursor.execute(f"DELETE FROM Deposits WHERE `Deposit_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def updateEmployees(self, id, emp_name, login, password, role, emp_phone, emp_passport, pos_id):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"UPDATE Employees set `Emp_Name`='{emp_name}', `Login`='{login}', `Password`='{password}', `Role`='{role}', `Emp_Phone`='{emp_phone}', `Emp_Passport`='{emp_passport}', `Position_ID`={pos_id} WHERE `Employee_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def updateDeposits(self, id, dep_name, percent_rate, curr_id, depositor_id):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"UPDATE Deposits set `Dep_Name`='{dep_name}', `Percent_Rate`={percent_rate}, `Currency_ID`={curr_id}, `Depositor_ID`={depositor_id} WHERE `Deposit_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def updatePositions(self, id, pos_name, salary, responsibility, requirement):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"UPDATE Positions set `Pos_Name`='{pos_name}', `Salary`={salary}, `Responsibility`='{responsibility}', `Requirement`='{requirement}' WHERE `Position_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def updateCurrencies(self, id, curr_name, ex_rate):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"UPDATE Currencies set `Curr_Name`='{curr_name}', `Exchange_Rate`={ex_rate} WHERE `Currency_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def updateDepositors(self, id, depositor_name, depositor_phone, depositor_passport, dep_sum, ref_sum, dep_date, ref_date, ref_status, emp_id):
-        cursor = self.connection.cursor()
-        cursor.execute(
-            f"UPDATE Depositors set `Depositor_Name`='{depositor_name}', `Depositor_Phone`='{depositor_phone}', `Depositor_Passport`='{depositor_passport}', `Dep_Sum`={dep_sum}, `Refund_Sum`={ref_sum}, `Dep_Date`='{dep_date}', `Refund_Date`='{ref_date}', `Refund_Status`='{ref_status}', `Employee_ID`={emp_id} WHERE `Depositor_ID`={id}")
-        self.connection.commit()
-        cursor.close()
-
-    def get_pas(self, log):
-        cur = self.connection.cursor()
-        try:
-            cur.execute(f"""SELECT Employee_ID, Password, Role FROM Employees WHERE Login='{log}'""")
-            rec = cur.fetchall()[0]
+        def get_from_books(self):
+            cur = self.db.cursor()
+            cur.execute("""SELECT * FROM Books""")
+            records = cur.fetchall()
             cur.close()
-            return rec[0], rec[1], rec[2]
-        except Exception:
+            return records
+
+        def create_combobox_positions(self):  # Данные для комбобокса Position
+            cur = self.db.cursor()
+            cur.execute("""SELECT Position_ID, Position_Name FROM Positions""")
+            records = cur.fetchall()
+            l = []
+            for i in records:
+                l.append(str(i[0]) + ' ' + i[1])
             cur.close()
-            return '', '', ''
+            return l
+
+        def create_combobox_readers(self):  # Данные для комбобокса Position
+            cur = self.db.cursor()
+            cur.execute("""SELECT Reader_ID, Reader_Name FROM Readers""")
+            records = cur.fetchall()
+            l = []
+            for i in records:
+                l.append(str(i[0]) + ' ' + i[1])
+            cur.close()
+            return l
+
+        def create_combobox_publishers(self):  # Данные для комбобокса Position
+            cur = self.db.cursor()
+            cur.execute("""SELECT Publisher_ID, Publisher_Name FROM Publishers""")
+            records = cur.fetchall()
+            l = []
+            for i in records:
+                l.append(str(i[0]) + ' ' + i[1])
+            cur.close()
+            return l
+
+        def add_in_books(self, name, description, genre, publisher):
+            cur = self.db.cursor()
+            cur.execute("INSERT INTO Books VALUES (NULL, ?, ?, ?, ?)", (name, description, genre, publisher))
+            self.db.commit()
+            cur.close()
+
+        # def delete_from_debtors2(self, id):
+        #     id = int(id)
+        #     cur = self.db.cursor()
+        #     cur.execute(f"""DELETE from Debtors WHERE CD_ID={id}""")
+        #     self.db.commit()
+        #     cur.close()
+
+        def delete_from_books(self, id):
+            id = int(id)
+            cur = self.db.cursor()
+            cur.execute(f"""DELETE from Books WHERE Book_ID={id}""")
+            self.db.commit()
+            cur.close()
+
+        def update_books(self, id, name, description, genre, publisher):
+            id = int(id)
+            cur = self.db.cursor()
+            cur.execute(
+                f""" UPDATE Books set CD_Name="{name}", CD_Description="{description}", CD_Genre="{genre}", CD_Publisher="{publisher}"  WHERE CD_ID={id}""")
+            self.db.commit()
+            cur.close()
 
 
-if __name__ == '__main__':
-    D = Database()
+if __name__ == "__main__":
+    db = DataBase()
