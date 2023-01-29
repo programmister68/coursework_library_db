@@ -32,47 +32,47 @@ class DataBase:
        """)
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Books (
-                    Book_ID integer primary key,
-                    Book_Name TEXT,
-                    Book_Author TEXT,
-                    Book_Date TEXT,
-                    Publisher_ID INT,
-                    FOREIGN KEY (Publisher_ID) REFERENCES Publishers(Publisher_ID) ON DELETE SET NULL ON UPDATE CASCADE
-                    )
-                """)
+            Book_ID integer primary key,
+            Book_Name TEXT,
+            Book_Author TEXT,
+            Book_Date TEXT,
+            Publisher_ID INT,
+            FOREIGN KEY (Publisher_ID) REFERENCES Publishers(Publisher_ID) ON DELETE SET NULL ON UPDATE CASCADE
+            )
+        """)
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Employees (
-                    Employee_ID integer primary key,
-                    Employee_Name TEXT,
-                    Employee_Gender TEXT,
-                    Employee_Date TEXT,
-                    Employee_Address TEXT,
-                    Employee_Passport TEXT,
-                    Login TEXT,
-                    Password TEXT,
-                    Access_Level INT,
-                    Position_ID INT,
-                    FOREIGN KEY (Position_ID) REFERENCES Positions(Position_ID) ON DELETE SET NULL ON UPDATE CASCADE
-                    )
-                """)
+            Employee_ID integer primary key,
+            Employee_Name TEXT,
+            Employee_Gender TEXT,
+            Employee_Date TEXT,
+            Employee_Address TEXT,
+            Employee_Passport TEXT,
+            Login TEXT,
+            Password TEXT,
+            Access_Level INT,
+            Position_ID INT,
+            FOREIGN KEY (Position_ID) REFERENCES Positions(Position_ID) ON DELETE SET NULL ON UPDATE CASCADE
+            )
+        """)
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Positions (
-                            Position_ID integer primary key,
-                            Position_Name TEXT,
-                            Employee_Salary INT
-                            )
-                        """)
+            Position_ID integer primary key,
+            Position_Name TEXT,
+            Employee_Salary INT
+            )
+        """)
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Issues (
-                                    Issue_Date TEXT,
-                                    Return_Date TEXT,
-                                    Return_Status TEXT,
-                                    Reader_ID INT,
-                                    Book_ID INT,
-                                    FOREIGN KEY (Reader_ID) REFERENCES Readers(Reader_ID) ON DELETE SET NULL ON UPDATE CASCADE,
-                                    FOREIGN KEY (Book_ID) REFERENCES Books(Book_ID) ON DELETE SET NULL ON UPDATE CASCADE
-                                    )
-                                """)
+            Issue_Date TEXT,
+            Return_Date TEXT,
+            Return_Status TEXT,
+            Reader_ID INT,
+            Book_ID INT,
+            FOREIGN KEY (Reader_ID) REFERENCES Readers(Reader_ID) ON DELETE SET NULL ON UPDATE CASCADE,
+            FOREIGN KEY (Book_ID) REFERENCES Books(Book_ID) ON DELETE SET NULL ON UPDATE CASCADE
+            )
+        """)
         self.db.commit()
         cur.close()
 
