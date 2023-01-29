@@ -1,6 +1,6 @@
 from PyQt5.QtCore import Qt, QTime, QDateTime
 from PyQt5.QtWidgets import QTableWidgetItem
-from database import Database
+from database import DataBase
 import logging
 import sys
 
@@ -22,10 +22,12 @@ class MainWindow(QMainWindow):
         self.ui = uic.loadUi("forms/main.ui", self)
         self.exitButton.setIcon(QIcon('icons/power-off.png'))
         self.page = self.ui.stackedWidget_main
+
         self.page_id = [0]  # индексы доступных страничек после авторизации для сотрудника
+
         self.now_page = 0
         self.page.setCurrentIndex(self.page_id[self.now_page])
-        self.db = Database()
+        self.db = DataBase()
 
         self.ui.nextButton.clicked.connect(self.next_page)
         self.ui.backButton.clicked.connect(self.back_page)

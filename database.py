@@ -122,6 +122,17 @@ class DataBase:
             cur.close()
             return records
 
+        def get_pas(self, log):
+            cur = self.connection.cursor()
+            try:
+                cur.execute("""SELECT Employee_ID, Password, Access_Level FROM Employees WHERE Login='{log}'""")
+                rec = cur.fetchall()[0]
+                cur.close()
+                return rec[0], rec[1], rec[2]
+            except Exception:
+                cur.close()
+                return '', '', ''
+
         """
         Блок создания комбобоксов
         """
@@ -158,7 +169,7 @@ class DataBase:
 
         def create_combobox_publishers(self):  # Данные для комбобокса Publishers
             cur = self.db.cursor()
-            cur.execute("""SELECT Publisher_ID, Publisher_Name FROM Publishers""")
+            cur.execute(f"""SELECT Publisher_ID, Publisher_Name FROM Publishers""")
             records = cur.fetchall()
             l = []
             for i in records:
