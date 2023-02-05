@@ -184,7 +184,7 @@
          <string notr="true">font: &quot;Comic Sans MS&quot;;</string>
         </property>
         <property name="currentIndex">
-         <number>4</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="page_1_for_admin">
          <property name="maximumSize">
@@ -1914,7 +1914,7 @@ font: 8pt &quot;Nunito&quot;;</string>
      <x>0</x>
      <y>0</y>
      <width>800</width>
-     <height>21</height>
+     <height>26</height>
     </rect>
    </property>
   </widget>

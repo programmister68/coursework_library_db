@@ -22,7 +22,7 @@ class MainWindow(QMainWindow):
         self.exitButton.setIcon(QIcon('icons/power-off.png'))
         self.page = self.ui.stackedWidget_main
 
-        self.page_id = [0]  # индексы доступных страничек после авторизации для сотрудника
+        self.page_id = [3, 1]  # индексы доступных страничек после авторизации для сотрудника
         self.now_page = 0
         self.page.setCurrentIndex(self.page_id[self.now_page])
 
@@ -37,7 +37,9 @@ class MainWindow(QMainWindow):
         self.ui.save_emloyee.clicked.connect(self.save_employee)
 
         self.updateTableEmployees()
+
         logging.log(logging.INFO, 'Приложение запущено.')
+
 
     def exit(self):
         self.now_page = 0
@@ -67,10 +69,10 @@ class MainWindow(QMainWindow):
     def updateTableEmployees(self):
         self.table_employees.clear()
         rec = self.db.get_from_employees()
-        self.ui.table_employees.setColumnCount(9)
+        self.ui.table_employees.setColumnCount(10)
         self.ui.table_employees.setRowCount(len(rec))
         self.ui.table_employees.setHorizontalHeaderLabels(
-            ['ID', 'ФИО', 'Дата рождения', 'Паспорт', 'Телефон', 'Логин', 'Пароль', 'Уровень доступа', 'Должность'])
+            ['ID', 'ФИО', 'Дата рождения', 'Адрес', 'Паспорт', 'Телефон', 'Логин', 'Пароль', 'Уровень доступа', 'ID должности'])
 
         for i, exposition in enumerate(rec):
             for x, field in enumerate(exposition):
@@ -147,7 +149,7 @@ class DialogAuth(QDialog):
     def __init__(self, parent=None):
         super(DialogAuth, self).__init__(parent)
         self.ui = uic.loadUi("forms/auth.ui", self)
-        self.setWindowIcon(QIcon('icons/authentication.png'))
+        self.setWindowIcon(QIcon('icons/reading-book.png'))
         self.scene = QGraphicsScene(0, 0, 300, 80)
         self.ui.btn_enter.clicked.connect(self.enter)
         self.btn_hide_password.setIcon(QIcon('icons/eye_close.png'))
@@ -184,14 +186,14 @@ class DialogAuth(QDialog):
         if auth_log == '' or auth_pas == '':
             self.mes_box('Заполните все поля!')
         else:
-            self.parent().id, password, role = self.parent().db.get_pas(auth_log)
+            self.parent().id, password, access = self.parent().db.get_pas(auth_log)
             if password != auth_pas:
-                self.mes_box('Неправильно введены данные.')
+                self.mes_box('Неверный логин или пароль')
             elif password == auth_pas:
-                if role == '1':
-                    self.parent().page_id = [0, 1, 2, 4]
-                elif role == '2':
-                    self.parent().page_id = [0, 3, 5]
+                if access == '0':
+                    self.parent().page_id = [4]
+                elif access == '1':
+                    self.parent().page_id = [4]
                 self.parent().show()
                 self.close()
 
@@ -205,6 +207,7 @@ class Builder:
     def auth(self):
         self.window.open_auth()
         self.qapp.exec()
+
 
 
 if __name__ == '__main__':

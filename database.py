@@ -123,7 +123,7 @@ class DataBase:
     def get_pas(self, log):
         cur = self.db.cursor()
         try:
-            cur.execute("""SELECT Employee_ID, Password, Access_Level FROM Employees WHERE Login='{log}'""")
+            cur.execute(f"""SELECT Employee_ID, Password, Access_Level FROM Employees WHERE Login='{log}'""")
             rec = cur.fetchall()[0]
             cur.close()
             return rec[0], rec[1], rec[2]
