@@ -1,7 +1,6 @@
 from PyQt5.QtCore import Qt, QTime, QDateTime
 from PyQt5.QtWidgets import QTableWidgetItem
 from database import DataBase
-import logging
 import sys
 
 from PyQt5 import QtWidgets
@@ -13,6 +12,8 @@ from PyQt5.QtWidgets import QGraphicsScene
 from PyQt5.QtWidgets import QMainWindow
 from PyQt5.QtWidgets import QMessageBox
 
+import logging
+logging.basicConfig(level=logging.INFO)
 
 class MainWindow(QMainWindow):
     def __init__(self):
@@ -40,22 +41,24 @@ class MainWindow(QMainWindow):
 
         logging.log(logging.INFO, 'Приложение запущено.')
 
-
     def exit(self):
         self.now_page = 0
         self.page.setCurrentIndex(self.page_id[self.now_page])
         self.hide()
+        logging.log(logging.INFO, 'Завершение сессии.')
         self.open_auth()
 
     def next_page(self):
         if self.now_page != len(self.page_id) - 1:
             self.now_page += 1
             self.page.setCurrentIndex(self.page_id[self.now_page])
+            logging.log(logging.INFO, 'Следующая страница.')
 
     def back_page(self):
         if self.now_page != 0:
             self.now_page -= 1
             self.page.setCurrentIndex(self.page_id[self.now_page])
+            logging.log(logging.INFO, 'Предыдущая страница.')
 
     def open_auth(self):
         dialog = DialogAuth(self)
@@ -63,6 +66,7 @@ class MainWindow(QMainWindow):
         self.setWindowIcon(QIcon('icons/books.png'))
         dialog.show()
         dialog.exec_()
+        logging.log(logging.INFO, 'Начало сессии.')
 
     #########################
 
@@ -107,6 +111,7 @@ class MainWindow(QMainWindow):
 
         self.db.add_in_employees(employees_fio, employees_date, employees_address, employees_passport, employees_phone, login, password, access, positions_combobox)
         self.updateTableEmployees()
+        logging.log(logging.INFO, 'Запись добавлена.')
 
     def delete_employee(self):
         SelectedRow = self.table_employees.currentRow()
@@ -118,6 +123,7 @@ class MainWindow(QMainWindow):
             msg.setIcon(QMessageBox.Warning)
             msg.setText("В таблице нет данных!")
             msg.setWindowTitle("Ошибка")
+            logging.log(logging.INFO, 'Ошибка!')
             msg.setStandardButtons(QMessageBox.Ok)
             msg.exec_()
 
@@ -126,6 +132,7 @@ class MainWindow(QMainWindow):
             msg.setIcon(QMessageBox.Warning)
             msg.setText("Выберите поле для удаления!")
             msg.setWindowTitle("Ошибка")
+            logging.log(logging.INFO, 'Ошибка!')
             msg.setStandardButtons(QMessageBox.Ok)
             msg.exec_()
 
@@ -134,6 +141,7 @@ class MainWindow(QMainWindow):
                 self.table_employees.setItem(SelectedRow, col, QTableWidgetItem(''))
             ix = self.table_employees.model().index(-1, -1)
             self.table_employees.setCurrentIndex(ix)
+            logging.log(logging.INFO, 'Запись удалена.')
 
     def save_employee(self):
         data = self.getFromTableEmployees()
@@ -143,6 +151,7 @@ class MainWindow(QMainWindow):
             else:
                 self.db.delete_from_employees(int(string[0]))
         self.updateTableEmployees()
+        logging.log(logging.INFO, 'Данные успешно записаны.')
 
 
 class DialogAuth(QDialog):
@@ -185,10 +194,12 @@ class DialogAuth(QDialog):
 
         if auth_log == '' or auth_pas == '':
             self.mes_box('Заполните все поля!')
+            logging.log(logging.INFO, 'Ошибка!')
         else:
             self.parent().id, password, access = self.parent().db.get_pas(auth_log)
             if password != auth_pas:
                 self.mes_box('Неверный логин или пароль')
+                logging.log(logging.INFO, 'Ошибка!')
             elif password == auth_pas:
                 if access == '0':
                     self.parent().page_id = [4]
@@ -207,7 +218,7 @@ class Builder:
     def auth(self):
         self.window.open_auth()
         self.qapp.exec()
-
+        logging.log(logging.INFO, 'Приложение завершила свою работу.')
 
 
 if __name__ == '__main__':
