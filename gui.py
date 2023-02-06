@@ -139,7 +139,7 @@ class MainWindow(QMainWindow):
         data = self.getFromTableEmployees()
         for string in data:
             if string[1] != '':
-                self.db.update_employees(int(string[0]), string[1], string[2], string[3], string[4], string[5], string[6], int(string[7]))
+                self.db.update_employees(int(string[0]), string[1], string[2], string[3], string[4], string[5], string[6], string[7], int(string[8]), int(string[9]))
             else:
                 self.db.delete_from_employees(int(string[0]))
         self.updateTableEmployees()
