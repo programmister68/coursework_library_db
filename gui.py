@@ -20,7 +20,8 @@ class MainWindow(QMainWindow):
         super().__init__()
         self.db = DataBase()
         self.ui = uic.loadUi("forms/main.ui", self)
-        self.exitButton.setIcon(QIcon('icons/power-off.png'))
+        # self.exitButton.setIcon(QIcon('icons/logout.png'))
+
         self.page = self.ui.stackedWidget_main
 
         self.page_id = [3, 1, 0, 4, 2, 5]  # индексы доступных страничек после авторизации для сотрудника
@@ -28,8 +29,13 @@ class MainWindow(QMainWindow):
         self.page.setCurrentIndex(self.page_id[self.now_page])
 
         self.ui.nextButton.clicked.connect(self.next_page)
+        self.ui.nextButton.setToolTip("Следующая страница")
+
         self.ui.backButton.clicked.connect(self.back_page)
+        self.ui.backButton.setToolTip("Предыдущая страница")
+
         self.ui.exitButton.clicked.connect(self.exit)
+        self.ui.exitButton.setToolTip("Завершить текущую сессию")
 
         # Кнопки монипуляции данных таблицы Employees
 
@@ -154,8 +160,14 @@ class MainWindow(QMainWindow):
         add_pos_salary = self.ui.add_pos_salary.text()
 
         self.db.add_in_positions(add_pos_name, add_pos_salary)
+        self.update_combobox_positions()
         self.updateTablePositions()
         logging.log(logging.INFO, 'Запись добавлена.')
+
+    def update_combobox_positions(self):
+        self.positions_combobox.clear()
+        self.positions_combobox.addItems(self.db.create_combobox_positions())
+        logging.log(logging.INFO, 'Виджет ComboBox обновлён.')
 
     def delete_employee(self):
         SelectedRow = self.table_employees.currentRow()
@@ -234,6 +246,7 @@ class MainWindow(QMainWindow):
                 self.db.update_positions(int(string[0]), string[1], int(string[2]))
             else:
                 self.db.delete_from_positions(int(string[0]))
+        self.update_combobox_positions()
         self.updateTablePositions()
         logging.log(logging.INFO, 'Данные успешно записаны.')
 

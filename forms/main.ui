@@ -96,10 +96,21 @@
            <cursorShape>PointingHandCursor</cursorShape>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(255, 112, 112);</string>
+           <string notr="true">background-color: rgba(255, 255, 255);
+border: none;</string>
           </property>
           <property name="text">
            <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../icons/power-of.png</normaloff>../icons/power-of.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -149,11 +160,21 @@
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(170, 255, 127);
-</string>
+           <string notr="true">background-color: rgba(255, 255, 255);
+border: none;</string>
           </property>
           <property name="text">
-           <string>◁</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../icons/prev.png</normaloff>../icons/prev.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
           </property>
          </widget>
         </item>
@@ -181,10 +202,21 @@
            </font>
           </property>
           <property name="styleSheet">
-           <string notr="true">background-color: rgb(170, 255, 127);</string>
+           <string notr="true">background-color: rgba(255, 255, 255);
+border: none;</string>
           </property>
           <property name="text">
-           <string>▷</string>
+           <string/>
+          </property>
+          <property name="icon">
+           <iconset>
+            <normaloff>../icons/next.png</normaloff>../icons/next.png</iconset>
+          </property>
+          <property name="iconSize">
+           <size>
+            <width>32</width>
+            <height>32</height>
+           </size>
           </property>
          </widget>
         </item>
