@@ -37,6 +37,8 @@ class MainWindow(QMainWindow):
         self.ui.delete_emloyee.clicked.connect(self.delete_employee)
         self.ui.save_emloyee.clicked.connect(self.save_employee)
 
+        self.positions_combobox.addItems(self.db.create_combobox_positions())
+
         self.updateTableEmployees()
 
         logging.log(logging.INFO, 'Приложение запущено.')

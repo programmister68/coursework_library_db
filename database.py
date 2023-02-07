@@ -13,7 +13,7 @@ class DataBase:
         cur.execute("""PRAGMA foreign_keys = ON;""")  # команда, включающее каскадное обновление данных
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Readers (
-            Reader_ID INT primary key,
+            Reader_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Reader_Name TEXT,
             Reader_Date TEXT,
             Reader_Address TEXT,
@@ -22,7 +22,7 @@ class DataBase:
         """)
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Publishers (
-            Publisher_ID INT primary key,
+            Publisher_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Publisher_Name TEXT,
             Publisher_Address TEXT,
             Publisher_Phone TEXT,
@@ -31,7 +31,7 @@ class DataBase:
        """)
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Books (
-            Book_ID INT primary key,
+            Book_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Book_Name TEXT,
             Book_Author TEXT,
             Book_Date TEXT,
@@ -41,7 +41,7 @@ class DataBase:
         """)
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Employees (
-            Employee_ID INT primary key,
+            Employee_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Employee_Name TEXT,
             Employee_Date TEXT,
             Employee_Address TEXT,
@@ -56,7 +56,7 @@ class DataBase:
         """)
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Positions (
-            Position_ID INT primary key,
+            Position_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Position_Name TEXT,
             Employee_Salary INT
             )
