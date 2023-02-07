@@ -293,7 +293,7 @@ border: none;</string>
           </size>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_3">
-          <item alignment="Qt::AlignHCenter">
+          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
            <widget class="QLabel" name="label_17">
             <property name="styleSheet">
              <string notr="true">font: 11pt &quot;Nunito ExtraBold&quot;;</string>
@@ -541,7 +541,7 @@ border: none;</string>
           <string notr="true">font: &quot;Comic Sans MS&quot;;</string>
          </property>
          <layout class="QVBoxLayout" name="verticalLayout_7">
-          <item alignment="Qt::AlignHCenter">
+          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
            <widget class="QLabel" name="label_2">
             <property name="font">
              <font>
@@ -737,7 +737,7 @@ border: none;</string>
         </widget>
         <widget class="QWidget" name="page_3_for_admin">
          <layout class="QVBoxLayout" name="verticalLayout_8">
-          <item alignment="Qt::AlignHCenter">
+          <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
            <widget class="QLabel" name="label_3">
             <property name="font">
              <font>
@@ -997,7 +997,7 @@ border: none;</string>
         </widget>
         <widget class="QWidget" name="page_4_for_banker">
          <layout class="QVBoxLayout" name="verticalLayout_10">
-          <item>
+          <item alignment="Qt::AlignVCenter">
            <widget class="QLabel" name="label_11">
             <property name="font">
              <font>
@@ -1432,7 +1432,7 @@ border: none;</string>
          <layout class="QVBoxLayout" name="verticalLayout_9">
           <item>
            <layout class="QVBoxLayout" name="verticalLayout_15">
-            <item alignment="Qt::AlignHCenter">
+            <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
              <widget class="QLabel" name="label_6">
               <property name="maximumSize">
                <size>
@@ -1702,7 +1702,7 @@ border: none;</string>
          <layout class="QVBoxLayout" name="verticalLayout_14">
           <item>
            <layout class="QHBoxLayout" name="horizontalLayout_17">
-            <item>
+            <item alignment="Qt::AlignHCenter|Qt::AlignVCenter">
              <widget class="QLabel" name="label_14">
               <property name="font">
                <font>
