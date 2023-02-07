@@ -10,8 +10,6 @@ class DataBase:
         Блок инициализация таблиц
         """
 
-        cur.execute("""PRAGMA foreign_keys = ON;""")  # команда, включающее каскадное обновление данных
-
         cur.execute("""CREATE TABLE IF NOT EXISTS Readers (
             Reader_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Reader_Name TEXT,
@@ -36,9 +34,10 @@ class DataBase:
             Book_Author TEXT,
             Book_Date TEXT,
             Publisher_ID INT,
-            FOREIGN KEY (Publisher_ID) REFERENCES Publishers(Publisher_ID) ON DELETE SET NULL ON UPDATE CASCADE
+            FOREIGN KEY (Publisher_ID) REFERENCES Publishers(Publisher_ID) ON DELETE CASCADE ON UPDATE CASCADE
             )
         """)
+
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Employees (
             Employee_ID INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -51,7 +50,7 @@ class DataBase:
             Password TEXT,
             Access_Level INT,
             Position_ID INT,
-            FOREIGN KEY (Position_ID) REFERENCES Positions(Position_ID) ON DELETE SET NULL ON UPDATE CASCADE
+            FOREIGN KEY (Position_ID) REFERENCES Positions(Position_ID) ON DELETE CASCADE ON UPDATE CASCADE
             )
         """)
 
@@ -67,8 +66,8 @@ class DataBase:
             Return_Status TEXT,
             Reader_ID INT,
             Book_ID INT,
-            FOREIGN KEY (Reader_ID) REFERENCES Readers(Reader_ID) ON DELETE SET NULL ON UPDATE CASCADE,
-            FOREIGN KEY (Book_ID) REFERENCES Books(Book_ID) ON DELETE SET NULL ON UPDATE CASCADE
+            FOREIGN KEY (Reader_ID) REFERENCES Readers(Reader_ID) ON DELETE CASCADE ON UPDATE CASCADE,
+            FOREIGN KEY (Book_ID) REFERENCES Books(Book_ID) ON DELETE CASCADE ON UPDATE CASCADE
             )
         """)
         self.db.commit()

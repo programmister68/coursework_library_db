@@ -51,7 +51,34 @@ class MainWindow(QMainWindow):
         self.ui.delete_pos.clicked.connect(self.delete_position)
         self.ui.save_pos.clicked.connect(self.save_position)
 
+        # Кнопки монипуляции данных таблицы Readers
+
+        # self.ui.emp_add.clicked.connect(self.)
+        # self.ui.emp_delete.clicked.connect(self.)
+        # self.ui.emp_save.clicked.connect(self.)
+
+        # Кнопки монипуляции данных таблицы Books
+
+        # self.ui.add_dep.clicked.connect(self.)
+        # self.ui.delete_dep.clicked.connect(self.)
+        # self.ui.save_dep.clicked.connect(self.)
+
+        # Кнопки монипуляции данных таблицы Publishers
+
+        # self.ui.pushButton_2.clicked.connect(self.)
+        # self.ui.pushButton_3.clicked.connect(self.)
+        # self.ui.pushButton.clicked.connect(self.)
+
+        # Кнопки монипуляции данных таблицы Issues
+
+        # self.ui.issues_add.clicked.connect(self.)
+        # self.ui.issues_delete.clicked.connect(self.)
+        # self.ui.issues_save.clicked.connect(self.)
+
         self.positions_combobox.addItems(self.db.create_combobox_positions())
+        self.readers_combobox.addItems(self.db.create_combobox_readers())
+        self.books_combobox.addItems(self.db.create_combobox_books())
+        self.publishers_combobox.addItems(self.db.create_combobox_publishers())
 
         self.updateTableEmployees()
         self.updateTablePositions()
@@ -263,6 +290,7 @@ class DialogAuth(QDialog):
         self.ui.btn_enter.setToolTip("Войти в учётную запись")
         self.btn_hide_password.setIcon(QIcon('icons/eye_close.png'))
         self.ui.btn_hide_password.clicked.connect(self.vis_pas)
+        self.ui.btn_hide_password.setToolTip("Показать пароль")
 
 
         self.db = DataBase()
