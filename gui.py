@@ -23,7 +23,7 @@ class MainWindow(QMainWindow):
         self.exitButton.setIcon(QIcon('icons/power-off.png'))
         self.page = self.ui.stackedWidget_main
 
-        self.page_id = [3, 1]  # индексы доступных страничек после авторизации для сотрудника
+        self.page_id = [3, 1, 0, 4, 2, 5]  # индексы доступных страничек после авторизации для сотрудника
         self.now_page = 0
         self.page.setCurrentIndex(self.page_id[self.now_page])
 
@@ -31,15 +31,22 @@ class MainWindow(QMainWindow):
         self.ui.backButton.clicked.connect(self.back_page)
         self.ui.exitButton.clicked.connect(self.exit)
 
-        # Кнопки монипуляции данных таблицы Employee
+        # Кнопки монипуляции данных таблицы Employees
 
         self.ui.add_emloyee.clicked.connect(self.new_employee)
         self.ui.delete_emloyee.clicked.connect(self.delete_employee)
         self.ui.save_emloyee.clicked.connect(self.save_employee)
 
+        # Кнопки монипуляции данных таблицы Positions
+
+        self.ui.add_pos.clicked.connect(self.new_positions)
+        self.ui.delete_pos.clicked.connect(self.delete_position)
+        self.ui.save_pos.clicked.connect(self.save_position)
+
         self.positions_combobox.addItems(self.db.create_combobox_positions())
 
         self.updateTableEmployees()
+        self.updateTablePositions()
 
         logging.log(logging.INFO, 'Приложение запущено.')
 
@@ -88,6 +95,22 @@ class MainWindow(QMainWindow):
                     item.setFlags(Qt.ItemIsEnabled)
                 self.ui.table_employees.setItem(i, x, item)
 
+    def updateTablePositions(self):
+        self.table_positions.clear()
+        rec = self.db.get_from_positions()
+        self.ui.table_positions.setColumnCount(3)
+        self.ui.table_positions.setRowCount(len(rec))
+        self.ui.table_positions.setHorizontalHeaderLabels(
+            ['ID', 'Наименование', 'Оклад(₽)'])
+
+        for i, exposition in enumerate(rec):
+            for x, field in enumerate(exposition):
+                item = QTableWidgetItem()
+                item.setText(str(field))
+                if x == 0:
+                    item.setFlags(Qt.ItemIsEnabled)
+                self.ui.table_positions.setItem(i, x, item)
+
     def getFromTableEmployees(self):
         rows = self.table_employees.rowCount()
         cols = self.table_employees.columnCount()
@@ -96,6 +119,17 @@ class MainWindow(QMainWindow):
             tmp = []
             for col in range(cols):
                 tmp.append(self.table_employees.item(row, col).text())
+            data.append(tmp)
+        return data
+
+    def getFromTablePositions(self):
+        rows = self.table_positions.rowCount()
+        cols = self.table_positions.columnCount()
+        data = []
+        for row in range(rows):
+            tmp = []
+            for col in range(cols):
+                tmp.append(self.table_positions.item(row, col).text())
             data.append(tmp)
         return data
 
@@ -113,6 +147,14 @@ class MainWindow(QMainWindow):
 
         self.db.add_in_employees(employees_fio, employees_date, employees_address, employees_passport, employees_phone, login, password, access, positions_combobox)
         self.updateTableEmployees()
+        logging.log(logging.INFO, 'Запись добавлена.')
+
+    def new_positions(self):
+        add_pos_name = self.ui.add_pos_name.text()
+        add_pos_salary = self.ui.add_pos_salary.text()
+
+        self.db.add_in_positions(add_pos_name, add_pos_salary)
+        self.updateTablePositions()
         logging.log(logging.INFO, 'Запись добавлена.')
 
     def delete_employee(self):
@@ -145,6 +187,36 @@ class MainWindow(QMainWindow):
             self.table_employees.setCurrentIndex(ix)
             logging.log(logging.INFO, 'Запись удалена.')
 
+    def delete_position(self):
+        SelectedRow = self.table_positions.currentRow()
+        rowcount = self.table_positions.rowCount()
+        colcount = self.table_positions.columnCount()
+
+        if rowcount == 0:
+            msg = QMessageBox(self)
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("В таблице нет данных!")
+            msg.setWindowTitle("Ошибка")
+            logging.log(logging.INFO, 'Ошибка!')
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+
+        elif SelectedRow == -1:
+            msg = QMessageBox(self)
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Выберите поле для удаления!")
+            msg.setWindowTitle("Ошибка")
+            logging.log(logging.INFO, 'Ошибка!')
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+
+        else:
+            for col in range(1, colcount):
+                self.table_positions.setItem(SelectedRow, col, QTableWidgetItem(''))
+            ix = self.table_positions.model().index(-1, -1)
+            self.table_positions.setCurrentIndex(ix)
+            logging.log(logging.INFO, 'Запись удалена.')
+
     def save_employee(self):
         data = self.getFromTableEmployees()
         for string in data:
@@ -153,6 +225,16 @@ class MainWindow(QMainWindow):
             else:
                 self.db.delete_from_employees(int(string[0]))
         self.updateTableEmployees()
+        logging.log(logging.INFO, 'Данные успешно записаны.')
+
+    def save_position(self):
+        data = self.getFromTablePositions()
+        for string in data:
+            if string[1] != '':
+                self.db.update_positions(int(string[0]), string[1], int(string[2]))
+            else:
+                self.db.delete_from_positions(int(string[0]))
+        self.updateTablePositions()
         logging.log(logging.INFO, 'Данные успешно записаны.')
 
 

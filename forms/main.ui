@@ -216,7 +216,7 @@
          <string notr="true">font: &quot;Comic Sans MS&quot;;</string>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>1</number>
         </property>
         <widget class="QWidget" name="page_1_for_admin">
          <property name="maximumSize">
@@ -545,6 +545,9 @@
                 <horstretch>1</horstretch>
                 <verstretch>0</verstretch>
                </sizepolicy>
+              </property>
+              <property name="maximum">
+               <number>200000</number>
               </property>
              </widget>
             </item>
