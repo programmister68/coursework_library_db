@@ -37,6 +37,8 @@ class MainWindow(QMainWindow):
         self.ui.exitButton.clicked.connect(self.exit)
         self.ui.exitButton.setToolTip("Завершить текущую сессию")
 
+        # self.ui.infoButton.setToolTip("Автор: Шепелёв Сергей, ИСП-41-19")
+
         # Кнопки монипуляции данных таблицы Employees
 
         self.ui.add_emloyee.clicked.connect(self.new_employee)
@@ -258,8 +260,10 @@ class DialogAuth(QDialog):
         self.setWindowIcon(QIcon('icons/reading-book.png'))
         self.scene = QGraphicsScene(0, 0, 300, 80)
         self.ui.btn_enter.clicked.connect(self.enter)
+        self.ui.btn_enter.setToolTip("Войти в учётную запись")
         self.btn_hide_password.setIcon(QIcon('icons/eye_close.png'))
         self.ui.btn_hide_password.clicked.connect(self.vis_pas)
+
 
         self.db = DataBase()
 
@@ -271,11 +275,13 @@ class DialogAuth(QDialog):
         if self.vis_p:
             self.vis_p = False
             self.btn_hide_password.setIcon(QIcon('icons/eye_close.png'))
+            self.ui.btn_hide_password.setToolTip("Показать пароль")
             ed.setEchoMode(QtWidgets.QLineEdit.Password)
 
         else:
             self.vis_p = True
             self.btn_hide_password.setIcon(QIcon('icons/eye.png'))
+            self.ui.btn_hide_password.setToolTip("Скрыть пароль")
             ed.setEchoMode(QtWidgets.QLineEdit.Normal)
 
     def mes_box(self, text):
