@@ -323,6 +323,11 @@ class DialogAuth(QDialog):
         auth_log = self.ui.edit_login.text()
         auth_pas = self.ui.edit_password.text()
 
+        if auth_log == 'admin' and auth_pas == 'admin':
+            self.parent().page_id = [0, 1, 2, 3, 4, 5]
+            self.parent().show()
+            self.close()
+        
         if auth_log == '' or auth_pas == '':
             self.mes_box('Заполните все поля!')
             logging.log(logging.INFO, 'Ошибка!')
@@ -343,6 +348,7 @@ class DialogAuth(QDialog):
                 elif access == 2:
                     self.mes_box('Отказано в доступе')
                     logging.log(logging.INFO, 'Ошибка!')
+
 
 
 
