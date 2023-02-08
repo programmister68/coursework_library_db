@@ -283,7 +283,7 @@ border: none;</string>
          <string notr="true">font: &quot;Comic Sans MS&quot;;</string>
         </property>
         <property name="currentIndex">
-         <number>5</number>
+         <number>4</number>
         </property>
         <widget class="QWidget" name="page_1_for_admin">
          <property name="maximumSize">
@@ -749,7 +749,7 @@ border: none;</string>
              </font>
             </property>
             <property name="text">
-             <string>Список выданных книг</string>
+             <string>Выданные книг</string>
             </property>
            </widget>
           </item>
@@ -877,6 +877,27 @@ border: none;</string>
                </widget>
               </item>
              </layout>
+            </item>
+           </layout>
+          </item>
+          <item>
+           <layout class="QHBoxLayout" name="horizontalLayout_2">
+            <item>
+             <widget class="QLabel" name="label_34">
+              <property name="text">
+               <string>Сотрудник</string>
+              </property>
+             </widget>
+            </item>
+            <item>
+             <widget class="QComboBox" name="employee_combobox">
+              <property name="sizePolicy">
+               <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                <horstretch>0</horstretch>
+                <verstretch>0</verstretch>
+               </sizepolicy>
+              </property>
+             </widget>
             </item>
            </layout>
           </item>
@@ -1181,7 +1202,7 @@ border: none;</string>
                  </font>
                 </property>
                 <property name="inputMask">
-                 <string>+7 (000) 000 - 00 - 00</string>
+                 <string>+7 (000) 000-00-00</string>
                 </property>
                </widget>
               </item>
@@ -1265,7 +1286,7 @@ border: none;</string>
                  </font>
                 </property>
                 <property name="maximum">
-                 <number>1</number>
+                 <number>2</number>
                 </property>
                </widget>
               </item>
@@ -1581,7 +1602,7 @@ border: none;</string>
               <item>
                <widget class="QLineEdit" name="add_phone_reader">
                 <property name="inputMask">
-                 <string>+7 (000) 000 - 00 - 00</string>
+                 <string>+7 (000) 000-00-00</string>
                 </property>
                </widget>
               </item>

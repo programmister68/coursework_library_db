@@ -78,6 +78,7 @@ class MainWindow(QMainWindow):
         self.readers_combobox.addItems(self.db.create_combobox_readers())
         self.books_combobox.addItems(self.db.create_combobox_books())
         self.publishers_combobox.addItems(self.db.create_combobox_publishers())
+        self.employee_combobox.addItems(self.db.create_combobox_employees())
 
         self.updateTableEmployees()
         self.updateTablePositions()
@@ -333,10 +334,16 @@ class DialogAuth(QDialog):
             elif password == auth_pas:
                 if access == 0:
                     self.parent().page_id = [0, 2, 4, 5]
+                    self.parent().show()
+                    self.close()
                 elif access == 1:
                     self.parent().page_id = [1, 3]
-                self.parent().show()
-                self.close()
+                    self.parent().show()
+                    self.close()
+                elif access == 2:
+                    self.mes_box('Отказано в доступе')
+                    logging.log(logging.INFO, 'Ошибка!')
+
 
 
 class Builder:

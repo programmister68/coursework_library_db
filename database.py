@@ -38,7 +38,6 @@ class DataBase:
             )
         """)
 
-
         cur.execute("""CREATE TABLE IF NOT EXISTS Employees (
             Employee_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Employee_Name TEXT,
@@ -66,8 +65,10 @@ class DataBase:
             Return_Status TEXT,
             Reader_ID INT,
             Book_ID INT,
+            Employee_ID INT,
             FOREIGN KEY (Reader_ID) REFERENCES Readers(Reader_ID) ON DELETE CASCADE ON UPDATE CASCADE,
-            FOREIGN KEY (Book_ID) REFERENCES Books(Book_ID) ON DELETE CASCADE ON UPDATE CASCADE
+            FOREIGN KEY (Book_ID) REFERENCES Books(Book_ID) ON DELETE CASCADE ON UPDATE CASCADE,
+            FOREIGN KEY (Employee_ID) REFERENCES Employees(Employee_ID) ON DELETE CASCADE ON UPDATE CASCADE
             )
         """)
         self.db.commit()
@@ -144,6 +145,16 @@ class DataBase:
         cur.close()
         return l
 
+    def create_combobox_employees(self):  # Данные для комбобокса Employees
+        cur = self.db.cursor()
+        cur.execute(f"""SELECT Employee_ID, Employee_Name FROM Employees WHERE Position_ID = 2""")
+        records = cur.fetchall()
+        l = []
+        for i in records:
+            l.append(str(i[0]) + ' ' + i[1])
+        cur.close()
+        return l
+
     def create_combobox_readers(self):  # Данные для комбобокса Readers
         cur = self.db.cursor()
         cur.execute("""SELECT Reader_ID, Reader_Name FROM Readers""")
@@ -190,9 +201,9 @@ class DataBase:
         self.db.commit()
         cur.close()
 
-    def add_in_issues(self, is_date, status, reader_id, book_id):
+    def add_in_issues(self, is_date, status, reader_id, book_id, employee_id):
         cur = self.db.cursor()
-        cur.execute("INSERT INTO Issues VALUES (?, ?, ?, ?)", (is_date, status, reader_id, book_id))
+        cur.execute("INSERT INTO Issues VALUES (?, ?, ?, ?, ?)", (is_date, status, reader_id, book_id, employee_id))
         self.db.commit()
         cur.close()
 
@@ -271,11 +282,11 @@ class DataBase:
         self.db.commit()
         cur.close()
 
-    def update_issues(self, id, is_date, status, reader_id, book_id):
+    def update_issues(self, id, is_date, status, reader_id, book_id, employee_id):
         id = int(id)
         cur = self.db.cursor()
         cur.execute(
-            f""" UPDATE Issues set Issue_Date="{is_date}", Return_Status="{status}", Reader_ID={reader_id}, Book_ID={book_id}  WHERE Reader_ID={id}""")
+            f""" UPDATE Issues set Issue_Date="{is_date}", Return_Status="{status}", Reader_ID={reader_id}, Book_ID={book_id}, Employee_ID={employee_id}  WHERE Reader_ID={id}""")
         self.db.commit()
         cur.close()
 
