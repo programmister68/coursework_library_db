@@ -61,6 +61,7 @@ class DataBase:
         """)
 
         cur.execute("""CREATE TABLE IF NOT EXISTS Issues (
+            Issue_ID INTEGER PRIMARY KEY AUTOINCREMENT,
             Issue_Date TEXT,
             Return_Status TEXT,
             Reader_ID INT,
@@ -203,7 +204,7 @@ class DataBase:
 
     def add_in_issues(self, is_date, status, reader_id, book_id, employee_id):
         cur = self.db.cursor()
-        cur.execute("INSERT INTO Issues VALUES (?, ?, ?, ?, ?)", (is_date, status, reader_id, book_id, employee_id))
+        cur.execute("INSERT INTO Issues VALUES (NULL, ?, ?, ?, ?, ?)", (is_date, status, reader_id, book_id, employee_id))
         self.db.commit()
         cur.close()
 
@@ -239,7 +240,7 @@ class DataBase:
     def delete_from_issues(self, id):
         id = int(id)
         cur = self.db.cursor()
-        cur.execute(f"""DELETE from Issues WHERE Reader_ID={id}""")
+        cur.execute(f"""DELETE from Issues WHERE Issue_ID={id}""")
         self.db.commit()
         cur.close()
 
@@ -287,7 +288,7 @@ class DataBase:
         id = int(id)
         cur = self.db.cursor()
         cur.execute(
-            f""" UPDATE Issues set Issue_Date="{is_date}", Return_Status="{status}", Reader_ID={reader_id}, Book_ID={book_id}, Employee_ID={employee_id}  WHERE Reader_ID={id}""")
+            f""" UPDATE Issues set Issue_Date="{is_date}", Return_Status="{status}", Reader_ID={reader_id}, Book_ID={book_id}, Employee_ID={employee_id}  WHERE Issue_ID={id}""")
         self.db.commit()
         cur.close()
 

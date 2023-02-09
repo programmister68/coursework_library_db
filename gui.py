@@ -73,7 +73,7 @@ class MainWindow(QMainWindow):
 
         self.ui.issues_add.clicked.connect(self.new_issues)
         self.ui.issues_delete.clicked.connect(self.delete_issue)
-        self.ui.issues_save.clicked.connect(self.save_publisher)
+        self.ui.issues_save.clicked.connect(self.save_issue)
 
         self.positions_combobox.addItems(self.db.create_combobox_positions())
         self.readers_combobox.addItems(self.db.create_combobox_readers())
@@ -202,10 +202,10 @@ class MainWindow(QMainWindow):
     def updateTableIssues(self):
         self.table_issues.clear()
         rec = self.db.get_from_issues()
-        self.ui.table_issues.setColumnCount(5)
+        self.ui.table_issues.setColumnCount(6)
         self.ui.table_issues.setRowCount(len(rec))
         self.ui.table_issues.setHorizontalHeaderLabels(
-            ['Дата выдачи', 'Статус', 'Читатель', 'Книга', 'Сотрудник'])
+            ['ID', 'Дата выдачи', 'Статус', 'Читатель', 'Книга', 'Сотрудник'])
 
         for i, exposition in enumerate(rec):
             for x, field in enumerate(exposition):
@@ -295,7 +295,7 @@ class MainWindow(QMainWindow):
         positions_combobox = positions_combobox.split(' ')[0]
 
         self.db.add_in_employees(employees_fio, employees_date, employees_address, employees_passport, employees_phone, login, password, access, positions_combobox)
-        self.update_combobox_emoployees()
+        self.update_combobox_employees()
         self.updateTableEmployees()
         logging.log(logging.INFO, 'Запись добавлена.')
 
@@ -374,7 +374,7 @@ class MainWindow(QMainWindow):
         self.readers_combobox.addItems(self.db.create_combobox_readers())
         logging.log(logging.INFO, 'Виджет ComboBox обновлён.')
 
-    def update_combobox_emoployees(self):
+    def update_combobox_employees(self):
         self.employee_combobox.clear()
         self.employee_combobox.addItems(self.db.create_combobox_employees())
         logging.log(logging.INFO, 'Виджет ComboBox обновлён.')
@@ -571,6 +571,7 @@ class MainWindow(QMainWindow):
                 self.db.update_employees(int(string[0]), string[1], string[2], string[3], string[4], string[5], string[6], string[7], int(string[8]), int(string[9]))
             else:
                 self.db.delete_from_employees(int(string[0]))
+        self.update_combobox_employees()
         self.updateTableEmployees()
         logging.log(logging.INFO, 'Данные успешно записаны.')
 
@@ -592,6 +593,7 @@ class MainWindow(QMainWindow):
                 self.db.update_books(int(string[0]), string[1], string[2], string[3], string[4])
             else:
                 self.db.delete_from_books(int(string[0]))
+        self.update_combobox_books()
         self.updateTableBooks()
         logging.log(logging.INFO, 'Данные успешно записаны.')
 
@@ -602,6 +604,7 @@ class MainWindow(QMainWindow):
                 self.db.update_readers(int(string[0]), string[1], string[2], string[3], string[4])
             else:
                 self.db.delete_from_readers(int(string[0]))
+        self.update_combobox_readers()
         self.updateTableReaders()
         logging.log(logging.INFO, 'Данные успешно записаны.')
 
@@ -612,6 +615,7 @@ class MainWindow(QMainWindow):
                 self.db.update_publishers(int(string[0]), string[1], string[2], string[3], string[4])
             else:
                 self.db.delete_from_publishers(int(string[0]))
+        self.update_combobox_publishers()
         self.updateTablePublishers()
         logging.log(logging.INFO, 'Данные успешно записаны.')
 
@@ -619,9 +623,9 @@ class MainWindow(QMainWindow):
         data = self.getFromTableIssues()
         for string in data:
             if string[1] != '':
-                self.db.update_issues(string[0], string[1], int(string[2]), int(string[3]), int(string[4]))
+                self.db.update_issues(int(string[0]), string[1], string[2], int(string[3]), int(string[4]), int(string[5]))
             else:
-                self.db.delete_from_issues(string[0])
+                self.db.delete_from_issues(int(string[0]))
         self.updateTableIssues()
         logging.log(logging.INFO, 'Данные успешно записаны.')
 
