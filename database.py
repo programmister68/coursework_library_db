@@ -74,9 +74,9 @@ class DataBase:
         self.db.commit()
         cur.close()
 
-        """
-        Блок чтение данных из таблиц
-        """
+    """
+    Блок чтение данных из таблиц
+    """
 
     def get_from_books(self):
         cur = self.db.cursor()
@@ -274,6 +274,7 @@ class DataBase:
     """
     Блок обновления данных
     """
+
     def update_books(self, id, name, description, date, publisher_id):
         id = int(id)
         cur = self.db.cursor()
