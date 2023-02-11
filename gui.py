@@ -26,7 +26,6 @@ class MainWindow(QMainWindow):
         self.page = self.ui.stackedWidget_main
         self.page_id = [0]  # индексы доступных страничек после авторизации для сотрудника
         self.now_page = 0
-        # self.page.setCurrentIndex(self.page_id[self.now_page])
 
         self.ui.nextButton.clicked.connect(self.next_page)
         self.ui.nextButton.setToolTip("Следующая страница")
@@ -688,10 +687,12 @@ class DialogAuth(QDialog):
             elif password == auth_pas:
                 if access == 0:
                     self.parent().page_id = [0, 2, 4, 5]
+                    self.parent().ui.stackedWidget_main.setCurrentIndex(self.parent().page_id[0])
                     self.parent().show()
                     self.close()
                 elif access == 1:
                     self.parent().page_id = [1, 3]
+                    self.parent().ui.stackedWidget_main.setCurrentIndex(self.parent().page_id[0])
                     self.parent().show()
                     self.close()
                 elif access == 2:
