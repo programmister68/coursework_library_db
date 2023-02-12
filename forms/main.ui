@@ -283,7 +283,7 @@ border: none;</string>
          <string notr="true">font: &quot;Comic Sans MS&quot;;</string>
         </property>
         <property name="currentIndex">
-         <number>4</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page_1_for_admin">
          <property name="maximumSize">
@@ -395,7 +395,7 @@ border: none;</string>
                </font>
               </property>
               <property name="inputMask">
-               <string>+7 (000) 000 - 00 - 00</string>
+               <string>+7 (000) 000-00-00</string>
               </property>
              </widget>
             </item>

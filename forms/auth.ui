@@ -76,7 +76,7 @@
          <property name="font">
           <font>
            <family>Nunito SemiBold</family>
-           <pointsize>9</pointsize>
+           <pointsize>12</pointsize>
            <weight>75</weight>
            <bold>true</bold>
           </font>

@@ -148,7 +148,7 @@ class DataBase:
 
     def create_combobox_employees(self):  # Данные для комбобокса Employees
         cur = self.db.cursor()
-        cur.execute(f"""SELECT Employee_ID, Employee_Name FROM Employees WHERE Position_ID = 2""")
+        cur.execute(f"""SELECT Employee_ID, Employee_Name FROM Employees WHERE Access_Level = 0""")
         records = cur.fetchall()
         l = []
         for i in records:
