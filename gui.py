@@ -293,19 +293,37 @@ class MainWindow(QMainWindow):
         positions_combobox = self.ui.positions_combobox.currentText()
         positions_combobox = positions_combobox.split(' ')[0]
 
-        self.db.add_in_employees(employees_fio, employees_date, employees_address, employees_passport, employees_phone, login, password, access, positions_combobox)
-        self.update_combobox_employees()
-        self.updateTableEmployees()
-        logging.log(logging.INFO, 'Запись добавлена.')
+        if employees_fio == '' or positions_combobox == '' or password == '' or login == '' or access == '':
+            msg = QMessageBox(self)
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Заполните поля")
+            msg.setWindowTitle("Ошибка")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            logging.log(logging.INFO, 'Ошибка.')
+        else:
+            self.db.add_in_employees(employees_fio, employees_date, employees_address, employees_passport, employees_phone, login, password, access, positions_combobox)
+            self.update_combobox_employees()
+            self.updateTableEmployees()
+            logging.log(logging.INFO, 'Запись добавлена.')
 
     def new_positions(self):
         add_pos_name = self.ui.add_pos_name.text()
         add_pos_salary = self.ui.add_pos_salary.text()
 
-        self.db.add_in_positions(add_pos_name, add_pos_salary)
-        self.update_combobox_positions()
-        self.updateTablePositions()
-        logging.log(logging.INFO, 'Запись добавлена.')
+        if add_pos_name == '' or add_pos_salary == '':
+            msg = QMessageBox(self)
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Заполните поля")
+            msg.setWindowTitle("Ошибка")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            logging.log(logging.INFO, 'Ошибка.')
+        else:
+            self.db.add_in_positions(add_pos_name, add_pos_salary)
+            self.update_combobox_positions()
+            self.updateTablePositions()
+            logging.log(logging.INFO, 'Запись добавлена.')
 
     def new_readers(self):
         add_fio_reader = self.ui.add_fio_reader.text()
@@ -313,10 +331,19 @@ class MainWindow(QMainWindow):
         add_address_reader = self.ui.add_address_reader.text()
         add_phone_reader = self.ui.add_phone_reader.text()
 
-        self.db.add_in_readers(add_fio_reader, add_date_birth_reader, add_address_reader, add_phone_reader)
-        self.update_combobox_readers()
-        self.updateTableReaders()
-        logging.log(logging.INFO, 'Запись добавлена.')
+        if add_fio_reader == '' or add_date_birth_reader == '' or add_address_reader == '' or add_phone_reader == '':
+            msg = QMessageBox(self)
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Заполните поля")
+            msg.setWindowTitle("Ошибка")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            logging.log(logging.INFO, 'Ошибка.')
+        else:
+            self.db.add_in_readers(add_fio_reader, add_date_birth_reader, add_address_reader, add_phone_reader)
+            self.update_combobox_readers()
+            self.updateTableReaders()
+            logging.log(logging.INFO, 'Запись добавлена.')
 
     def new_publishers(self):
         lineEdit_2 = self.ui.lineEdit_2.text()
@@ -324,10 +351,19 @@ class MainWindow(QMainWindow):
         lineEdit_4 = self.ui.lineEdit_4.text()
         lineEdit_5 = self.ui.lineEdit_5.text()
 
-        self.db.add_in_publishers(lineEdit_2, lineEdit_3, lineEdit_4, lineEdit_5)
-        self.update_combobox_publishers()
-        self.updateTablePublishers()
-        logging.log(logging.INFO, 'Запись добавлена.')
+        if lineEdit_2 == '' or lineEdit_3 == '' or lineEdit_4 == '' or lineEdit_5 == '':
+            msg = QMessageBox(self)
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Заполните поля")
+            msg.setWindowTitle("Ошибка")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            logging.log(logging.INFO, 'Ошибка.')
+        else:
+            self.db.add_in_publishers(lineEdit_2, lineEdit_3, lineEdit_4, lineEdit_5)
+            self.update_combobox_publishers()
+            self.updateTablePublishers()
+            logging.log(logging.INFO, 'Запись добавлена.')
 
     def new_books(self):
         dep_name_line = self.ui.dep_name_line.text()
@@ -336,10 +372,19 @@ class MainWindow(QMainWindow):
         publishers_combobox = self.ui.publishers_combobox.currentText()
         publishers_combobox = publishers_combobox.split(' ')[0]
 
-        self.db.add_in_books(dep_name_line, percent_line, dateEdit, publishers_combobox)
-        self.update_combobox_books()
-        self.updateTableBooks()
-        logging.log(logging.INFO, 'Запись добавлена.')
+        if dep_name_line == '' or publishers_combobox == '':
+            msg = QMessageBox(self)
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Заполните поля")
+            msg.setWindowTitle("Ошибка")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            logging.log(logging.INFO, 'Ошибка.')
+        else:
+            self.db.add_in_books(dep_name_line, percent_line, dateEdit, publishers_combobox)
+            self.update_combobox_books()
+            self.updateTableBooks()
+            logging.log(logging.INFO, 'Запись добавлена.')
 
     def new_issues(self):
         issues_date = self.ui.issues_date.text()
@@ -354,9 +399,18 @@ class MainWindow(QMainWindow):
         employee_combobox = self.ui.employee_combobox.currentText()
         employee_combobox = employee_combobox.split(' ')[0]
 
-        self.db.add_in_issues(issues_date, issues_status, readers_combobox, books_combobox, employee_combobox)
-        self.updateTableIssues()
-        logging.log(logging.INFO, 'Запись добавлена.')
+        if issues_date == '' or readers_combobox == '' or books_combobox == '' or employee_combobox == '':
+            msg = QMessageBox(self)
+            msg.setIcon(QMessageBox.Warning)
+            msg.setText("Заполните все поля")
+            msg.setWindowTitle("Ошибка")
+            msg.setStandardButtons(QMessageBox.Ok)
+            msg.exec_()
+            logging.log(logging.INFO, 'Ошибка.')
+        else:
+            self.db.add_in_issues(issues_date, issues_status, readers_combobox, books_combobox, employee_combobox)
+            self.updateTableIssues()
+            logging.log(logging.INFO, 'Запись добавлена.')
 
     def update_combobox_positions(self):
         self.positions_combobox.clear()

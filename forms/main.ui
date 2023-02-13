@@ -104,7 +104,7 @@ border: none;</string>
           </property>
           <property name="icon">
            <iconset>
-            <normaloff>../icons/power-of.png</normaloff>../icons/power-of.png</iconset>
+            <normaloff>../icons/logoutt.png</normaloff>../icons/logoutt.png</iconset>
           </property>
           <property name="iconSize">
            <size>
@@ -283,7 +283,7 @@ border: none;</string>
          <string notr="true">font: &quot;Comic Sans MS&quot;;</string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>3</number>
         </property>
         <widget class="QWidget" name="page_1_for_admin">
          <property name="maximumSize">
@@ -749,7 +749,7 @@ border: none;</string>
              </font>
             </property>
             <property name="text">
-             <string>Выданные книг</string>
+             <string>Список выданных книг</string>
             </property>
            </widget>
           </item>
