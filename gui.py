@@ -108,6 +108,7 @@ class MainWindow(QMainWindow):
             self.page.setCurrentIndex(self.page_id[self.now_page])
             logging.log(logging.INFO, 'Предыдущая страница.')
 
+
     def open_auth(self):
         dialog = DialogAuth(self)
         dialog.setWindowTitle('Авторизация')

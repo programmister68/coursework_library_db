@@ -283,7 +283,7 @@ border: none;</string>
          <string notr="true">font: &quot;Comic Sans MS&quot;;</string>
         </property>
         <property name="currentIndex">
-         <number>3</number>
+         <number>0</number>
         </property>
         <widget class="QWidget" name="page_1_for_admin">
          <property name="maximumSize">
@@ -299,7 +299,7 @@ border: none;</string>
              <string notr="true">font: 11pt &quot;Nunito ExtraBold&quot;;</string>
             </property>
             <property name="text">
-             <string>Издательсва</string>
+             <string>Издательства</string>
             </property>
            </widget>
           </item>
