@@ -205,7 +205,7 @@ class MainWindow(QMainWindow):
         self.ui.table_issues.setColumnCount(6)
         self.ui.table_issues.setRowCount(len(rec))
         self.ui.table_issues.setHorizontalHeaderLabels(
-            ['ID', 'Дата выдачи', 'Статус', 'Читатель', 'Книга', 'Сотрудник'])
+            ['ID', 'Дата выдачи', 'Выдано до', 'ID Читателя', 'ID Книги', 'ID Сотрудника'])
 
         for i, exposition in enumerate(rec):
             for x, field in enumerate(exposition):

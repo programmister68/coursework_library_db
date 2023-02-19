@@ -283,7 +283,7 @@ border: none;</string>
          <string notr="true">font: &quot;Comic Sans MS&quot;;</string>
         </property>
         <property name="currentIndex">
-         <number>0</number>
+         <number>2</number>
         </property>
         <widget class="QWidget" name="page_1_for_admin">
          <property name="maximumSize">
@@ -817,12 +817,19 @@ border: none;</string>
                  </font>
                 </property>
                 <property name="text">
-                 <string>Статус возврата</string>
+                 <string>Выдано до</string>
                 </property>
                </widget>
               </item>
               <item>
-               <widget class="QLineEdit" name="issues_status"/>
+               <widget class="QDateEdit" name="issues_status">
+                <property name="sizePolicy">
+                 <sizepolicy hsizetype="Expanding" vsizetype="Fixed">
+                  <horstretch>0</horstretch>
+                  <verstretch>0</verstretch>
+                 </sizepolicy>
+                </property>
+               </widget>
               </item>
              </layout>
             </item>

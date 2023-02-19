@@ -96,7 +96,7 @@ class TestAddData(TestCase):
         btn_add = self.window.ui.issues_add  # Объявление кнопки
 
         self.window.ui.issues_date.setDate(QDate.fromString("01.01.2022"))
-        self.window.ui.issues_status.setText("test_test")
+        self.window.ui.issues_status.setText("01.01.2023")
         self.window.ui.readers_combobox.addItems(self.db.create_combobox_readers())
         self.window.ui.books_combobox.addItems(self.db.create_combobox_books())
         self.window.ui.employee_combobox.addItems(self.db.create_combobox_employees())
